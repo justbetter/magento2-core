@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="JustBetter_Core::menu"
+             title="JustBetter"
+             module="JustBetter_Core"
+             translate="title"
+             sortOrder="70"
+             resource="JustBetter_Core::menu"/>
+        <add id="JustBetter_Core::settings_section"
+             title="Settings &amp; Support"
+             module="JustBetter_Core"
+             translate="title"
+             sortOrder="10"
+             parent="JustBetter_Core::menu"
+             resource="JustBetter_Core::menu"/>
+        <add id="JustBetter_Core::config"
+             title="Configuration"
+             module="JustBetter_Core"
+             translate="title"
+             sortOrder="10"
+             action="adminhtml/system_config/edit/section/justbetter_general"
+             parent="JustBetter_Core::settings_section"
+             resource="JustBetter_Core::config"/>
+    </menu>
+</config>

@@ -1,0 +1,42 @@
+<?php
+/**
+ * @var \JustBetter\Core\Block\Adminhtml\System\Config\Support $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+?>
+<div class="justbetter-support">
+    <div style="margin-bottom: 15px;">
+        <a href="<?= $escaper->escapeUrl($block->getWebsiteUrl()) ?>" target="_blank" rel="noopener noreferrer">
+            <img 
+                src="<?= $escaper->escapeUrl($block->getLogoUrl()) ?>"
+                alt="<?= $escaper->escapeHtmlAttr(__('JustBetter')) ?>"
+                style="max-width: 180px; height: auto;" 
+            />
+        </a>
+    </div>
+
+    <p style="margin-bottom: 10px;">
+        <?= $escaper->escapeHtml(__('JustBetter is an innovative Magento development agency from The Netherlands.')) ?>
+    </p>
+
+    <ul style="list-style: none; padding: 0; margin: 0;">
+        <li style="margin-bottom: 8px;">
+            <strong><?= $escaper->escapeHtml(__('Website:')) ?></strong>
+            <a href="<?= $escaper->escapeUrl($block->getWebsiteUrl()) ?>" target="_blank" rel="noopener noreferrer">
+                <?= $escaper->escapeHtml($block->getWebsiteUrl()) ?>
+            </a>
+        </li>
+        <li style="margin-bottom: 8px;">
+            <strong><?= $escaper->escapeHtml(__('Contact:')) ?></strong>
+            <a href="<?= $escaper->escapeUrl($block->getContactUrl()) ?>" target="_blank" rel="noopener noreferrer">
+                <?= $escaper->escapeHtml($block->getContactUrl()) ?>
+            </a>
+        </li>
+        <li style="margin-bottom: 8px;">
+            <strong><?= $escaper->escapeHtml(__('GitHub:')) ?></strong>
+            <a href="<?= $escaper->escapeUrl($block->getGithubUrl()) ?>" target="_blank" rel="noopener noreferrer">
+                <?= $escaper->escapeHtml($block->getGithubUrl()) ?>
+            </a>
+        </li>
+    </ul>
+</div>

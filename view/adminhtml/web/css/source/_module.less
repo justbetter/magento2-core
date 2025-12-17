@@ -1,0 +1,48 @@
+@import '_icons.less';
+
+.justbetter-icon(@url) {
+	background: @url no-repeat center;
+	background-size: contain;
+	content: '';
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#menu-justbetter-core-menu > a:before {
+	.justbetter-icon(@icon-justbetter__url-white);
+	width: 22px;
+	height: 22px;
+	margin-right: 8px;
+}
+
+.justbetter-extensions .title:before {
+	.justbetter-icon(@icon-justbetter__url-black);
+	width: 18px;
+	height: 18px;
+	margin-right: 8px;
+}
+
+.justbetter-tab {
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	border-radius: 4px;
+
+	&.active {
+		background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+	}
+
+	> a:before {
+		.justbetter-icon(@icon-justbetter__url-white);
+		width: 16px;
+		height: 16px;
+		margin-right: 8px;
+	}
+}
+
+.justbetter-extensions-list {
+	.value {
+		vertical-align: bottom !important;
+		.special {
+			font-weight: 600;
+		}
+	}
+}

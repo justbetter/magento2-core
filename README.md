@@ -30,7 +30,16 @@
   <summary>Table of Contents</summary>
   <ol>
     <li><a href="#about-the-module">About The Module</a></li>
+    <li><a href="#features">Features</a></li>
     <li><a href="#getting-started">Getting Started</a></li>
+    <li><a href="#integration-guide">Integration Guide</a>
+      <ul>
+        <li><a href="#adding-as-a-dependency">Adding as a Dependency</a></li>
+        <li><a href="#automatic-extensions-list">Automatic Extensions List</a></li>
+        <li><a href="#adding-menu-items">Adding Menu Items</a></li>
+        <li><a href="#using-the-configuration-tab">Using the Configuration Tab</a></li>
+      </ul>
+    </li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -39,7 +48,7 @@
 
 ## About The Module
 
-This module by [JustBetter](https://justbetter.nl) provides core infrastructure and shared functionality that other JustBetter Magento 2 modules depend on. It is not meant to be used as a standalone module, but rather as a foundational dependency.
+This module by [JustBetter](https://justbetter.nl) provides core infrastructure and shared functionality that other JustBetter Magento 2 modules depend on. It serves as the foundational layer for all JustBetter extensions, providing a unified admin experience and centralized management.
 
 ### Built With
 
@@ -54,20 +63,109 @@ Thanks to all the people who have contributed to this project:
   <img src="https://contrib.rocks/image?repo=justbetter/magento2-core" alt="Contributors" />
 </a>
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+## Features
+
+This module provides the following features for JustBetter extensions:
+
+- **Unified Admin Menu**: A centralized "JustBetter" menu item in the Magento admin panel for quick access to all JustBetter extension configurations
+- **Configuration Tab**: A dedicated "JustBetter Extensions" tab in System Configuration to group all extension settings
+- **Extensions Overview**: An admin panel displaying all installed JustBetter extensions with version information and GitHub links
 
 ## Getting Started
 
-This module is automatically installed as a dependency when installing other JustBetter modules.
+This module is automatically installed as a dependency when installing any JustBetter module that depends on it.
 
-If you need to enable it manually:
+After installation, enable the module:
 
 ```bash
 bin/magento module:enable JustBetter_Core
 bin/magento setup:upgrade && bin/magento cache:flush
 ```
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+## Integration Guide
+
+This section describes how other JustBetter extensions can integrate with the Core module to provide a consistent user experience across all JustBetter modules.
+
+### Adding as a Dependency
+
+Add the Core module as a dependency in your extension's `composer.json`:
+
+```json
+{
+    "require": {
+        "justbetter/magento2-core": "^1.0"
+    }
+}
+```
+
+Define the module sequence in `etc/module.xml` to ensure proper loading order:
+
+```xml
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="JustBetter_YourModule">
+        <sequence>
+            <module name="JustBetter_Core"/>
+        </sequence>
+    </module>
+</config>
+```
+
+### Automatic Extensions List
+
+All packages with the `justbetter/*` vendor prefix are automatically detected and displayed in the Extensions overview within the admin panel. No additional configuration is required for your extension to appear in this list.
+
+The extensions list displays:
+- Package name with link to GitHub repository
+- Installed version (from `composer.lock`)
+
+### Adding Menu Items
+
+To add your extension to the centralized JustBetter admin menu, create `etc/adminhtml/menu.xml`. The menu uses a section header with submenu items structure:
+
+```xml
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="JustBetter_YourModule::section"
+             title="Your Module"
+             module="JustBetter_YourModule"
+             translate="title"
+             sortOrder="40"
+             parent="JustBetter_Core::menu"
+             resource="JustBetter_YourModule::menu"/>
+        <add id="JustBetter_YourModule::config"
+             title="Configuration"
+             module="JustBetter_YourModule"
+             translate="title"
+             sortOrder="10"
+             action="adminhtml/system_config/edit/section/yourmodule_settings"
+             parent="JustBetter_YourModule::section"
+             resource="JustBetter_YourModule::config"/>
+    </menu>
+</config>
+```
+
+### Using the Configuration Tab
+
+To place your extension's configuration under the "JustBetter Extensions" tab in System Configuration, create `etc/adminhtml/system.xml`:
+
+```xml
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="yourmodule_settings" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Your Module</label>
+            <tab>justbetter</tab>
+            <resource>JustBetter_YourModule::config</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Settings</label>
+                <!-- Add your configuration fields here -->
+            </group>
+        </section>
+    </system>
+</config>
+```
 
 ## Contributing
 
@@ -87,20 +185,13 @@ Note: GrumPHP runs automatically on git commit.
 
 For security vulnerabilities, please see our [Security Policy](.github/SECURITY.md).
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 ## License
 
 Distributed under the GPL-3.0 License. See `LICENSE` for more information. Please see [License File](LICENSE) for more information.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 ## Contact
 
 [JustBetter B.V.](https://justbetter.nl/contact)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 <a href="https://justbetter.nl" title="JustBetter - Innovative Magento Development Agency">
     <img src="./.github/assets/footer.svg" alt="JustBetter - We're an innovative development agency from The Netherlands building better Magento solutions">

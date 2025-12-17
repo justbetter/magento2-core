@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="justbetter" translate="label" sortOrder="500" class="justbetter-tab justbetter-extensions">
+            <label>JustBetter Extensions</label>
+        </tab>
+
+        <section id="justbetter_general" translate="label" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+            <label>Settings &amp; Support</label>
+            <tab>justbetter</tab>
+            <resource>JustBetter_Core::config</resource>
+
+            <group id="settings" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Settings</label>
+                <field id="enable_menu" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable JustBetter Menu</label>
+                    <comment>Show or hide the JustBetter menu item in the admin panel.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <backend_model>JustBetter\Core\Model\Config\Backend\Menu</backend_model>
+                </field>
+            </group>
+
+            <group id="extensions" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Extensions</label>
+                <field id="list" translate="label" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label></label>
+                    <frontend_model>JustBetter\Core\Block\Adminhtml\System\Config\Extensions</frontend_model>
+                </field>
+            </group>
+
+            <group id="support" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Support</label>
+                <field id="info" translate="label" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Contact</label>
+                    <frontend_model>JustBetter\Core\Block\Adminhtml\System\Config\Support</frontend_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
