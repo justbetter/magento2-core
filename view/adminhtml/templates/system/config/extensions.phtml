@@ -1,0 +1,116 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * @var \JustBetter\Core\Block\Adminhtml\System\Config\Extensions $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+
+$extensions = $block->getExtensions();
+?>
+
+
+<div class="justbetter-extensions-list">
+    <?php if (empty($extensions)): ?>
+        <div class="message message-notice">
+            <span><?= $escaper->escapeHtml(__('No JustBetter extensions installed.')) ?></span>
+        </div>
+    <?php else: ?>
+        <table class="admin__table-primary">
+            <thead>
+                <tr>
+                    <th class="col-name"><?= $escaper->escapeHtml(__('Module')) ?></th>
+                    <th class="col-version"><?= $escaper->escapeHtml(__('Version')) ?></th>
+                    <th class="col-status"><?= $escaper->escapeHtml(__('Status')) ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($extensions as $extension): ?>
+                    <tr>
+                        <td class="col-name">
+                            <?php if ($extension['url']): ?>
+                                <a href="<?= $escaper->escapeUrl($extension['url']) ?>"
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   title="<?= $escaper->escapeHtmlAttr(__('View on GitHub')) ?>">
+                                    <strong><?= $escaper->escapeHtml($extension['name']) ?></strong>
+                                </a>
+                            <?php else: ?>
+                                <strong><?= $escaper->escapeHtml($extension['name']) ?></strong>
+                            <?php endif; ?>
+                        </td>
+                        <td class="col-version">
+                            <span class="version-badge"><?= $escaper->escapeHtml($extension['version']) ?></span>
+                        </td>
+                        <td class="col-status">
+                            <?php if ($extension['enabled']): ?>
+                                <span class="grid-severity-notice"><span><?= $escaper->escapeHtml(__('Enabled')) ?></span></span>
+                            <?php else: ?>
+                                <span class="grid-severity-critical"><span><?= $escaper->escapeHtml(__('Disabled')) ?></span></span>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
+</div>
+
+<style>
+    .justbetter-extensions-list .admin__table-primary {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .justbetter-extensions-list .admin__table-primary th,
+    .justbetter-extensions-list .admin__table-primary td {
+        padding: 10px 15px;
+        text-align: left;
+        border-bottom: 1px solid #e3e3e3;
+    }
+    .justbetter-extensions-list .admin__table-primary th {
+        background: #f8f8f8;
+        font-weight: 600;
+        color: #333;
+    }
+    .justbetter-extensions-list .admin__table-primary tbody tr:hover {
+        background: #fafafa;
+    }
+    .justbetter-extensions-list .col-name {
+        width: 30%;
+    }
+    .justbetter-extensions-list .col-name a {
+        color: #006bb4;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
+    .justbetter-extensions-list .col-name a:hover {
+        text-decoration: underline;
+    }
+    .justbetter-extensions-list .col-package {
+        width: 35%;
+    }
+    .justbetter-extensions-list .col-package code {
+        background: #f5f5f5;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-size: 12px;
+    }
+    .justbetter-extensions-list .col-version {
+        width: 15%;
+    }
+    .justbetter-extensions-list .version-badge {
+        display: inline-block;
+        background: #e8f4fc;
+        color: #0066cc;
+        padding: 2px 8px;
+        border-radius: 3px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+    .justbetter-extensions-list .col-status {
+        width: 20%;
+    }
+</style>
